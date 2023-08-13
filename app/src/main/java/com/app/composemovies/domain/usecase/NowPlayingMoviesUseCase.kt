@@ -8,15 +8,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 interface NowPlayingMoviesUseCase {
-    suspend fun getPopularMovies(): Flow<NetworkResponse<List<Movie>>>
+    suspend fun getPopularMovies(page: Int): Flow<NetworkResponse<List<Movie>>>
 }
 
 class NowPlayingMoviesUseCaseImpl(
     private val repository: MovieRepository,
     private val mapper: DataToDomainMapper
 ) : NowPlayingMoviesUseCase {
-    override suspend fun getPopularMovies(): Flow<NetworkResponse<List<Movie>>> {
-        return repository.getNowPlayingMovies().map { response ->
+    override suspend fun getPopularMovies(page: Int): Flow<NetworkResponse<List<Movie>>> {
+        return repository.getNowPlayingMovies(page).map { response ->
             when (response) {
                 is NetworkResponse.Success -> {
                     NetworkResponse.Success(

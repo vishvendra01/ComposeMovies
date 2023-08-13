@@ -22,6 +22,7 @@ class NowPlayingMovieViewModel @Inject constructor(
     private val domainToUiMapper: DomainToUiMapper
 ) : ViewModel() {
 
+    private var page = 1
     private var _moviesState: MutableStateFlow<NowPlayingMovieUiState> =
         MutableStateFlow(NowPlayingMovieUiState())
     val moviesState: StateFlow<NowPlayingMovieUiState> = _moviesState
@@ -32,7 +33,18 @@ class NowPlayingMovieViewModel @Inject constructor(
 
     private fun getNowPlayingMovies() {
         viewModelScope.launch {
-            nowPlayingMoviesUseCase.getPopularMovies().collect {
+            nowPlayingMoviesUseCase.getPopularMovies(page).collect {
+                handlePopularMovieResponse(it)
+            }
+        }
+    }
+
+    fun loadMore() {
+        viewModelScope.launch {
+            if (_moviesState.value.isLoadMore) return@launch
+
+            page++
+            nowPlayingMoviesUseCase.getPopularMovies(page).collect {
                 handlePopularMovieResponse(it)
             }
         }
@@ -43,10 +55,9 @@ class NowPlayingMovieViewModel @Inject constructor(
             is Success -> {
                 _moviesState.value = NowPlayingMovieUiState(
                     isLoading = false,
-                    movieUiStates = movies.data.map { movie ->
-                        domainToUiMapper.map(movie)
-                    }
-                )
+                    movieUiStates = _moviesState.value.movieUiStates + movies.data.map {
+                        domainToUiMapper.map(it)
+                    })
             }
 
             is Error -> {
@@ -63,7 +74,10 @@ class NowPlayingMovieViewModel @Inject constructor(
             }
 
             NetworkResponse.LoadingMore -> {
-
+                _moviesState.value = _moviesState.value.copy(
+                    isLoading = false,
+                    isLoadMore = true
+                )
             }
         }
     }

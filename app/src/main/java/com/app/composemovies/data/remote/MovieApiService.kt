@@ -14,7 +14,7 @@ interface MovieApiService {
     suspend fun getPopularMovies(@Query("page") page: Int): PopularMovieResponse
 
     @GET("movie/now_playing?api_key=${BuildConfig.TMBD_API_KEY}")
-    suspend fun getNowPlayingMovies(): PopularMovieResponse
+    suspend fun getNowPlayingMovies(@Query("page") page: Int): PopularMovieResponse
 
     @GET("movie/{movieId}?api_key=${BuildConfig.TMBD_API_KEY}")
     suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieDetailResponse

@@ -6,7 +6,6 @@ import com.app.composemovies.data.models.PopularMovieResponse
 import com.app.composemovies.data.remote.MovieApiService
 import com.app.composemovies.domain.repository.MovieRepository
 import com.app.composemovies.utils.NetworkResponse
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -20,7 +19,6 @@ class MovieRepositoryImpl(
                 emit(NetworkResponse.Loading)
             } else {
                 emit(NetworkResponse.LoadingMore)
-                delay(2000)
             }
             val response = try {
                 apiService.getPopularMovies(page)
@@ -32,11 +30,15 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun getNowPlayingMovies(): Flow<NetworkResponse<PopularMovieResponse>> {
+    override suspend fun getNowPlayingMovies(page: Int): Flow<NetworkResponse<PopularMovieResponse>> {
         return flow {
-            emit(NetworkResponse.Loading)
+            if (page == 1) {
+                emit(NetworkResponse.Loading)
+            } else {
+                emit(NetworkResponse.LoadingMore)
+            }
             val response = try {
-                apiService.getNowPlayingMovies()
+                apiService.getNowPlayingMovies(page)
             } catch (e: Exception) {
                 emit(NetworkResponse.Error(e))
                 return@flow

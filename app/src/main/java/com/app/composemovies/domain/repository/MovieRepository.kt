@@ -10,7 +10,7 @@ interface MovieRepository {
 
     suspend fun getPopularMovies(page: Int): Flow<NetworkResponse<PopularMovieResponse>>
 
-    suspend fun getNowPlayingMovies(): Flow<NetworkResponse<PopularMovieResponse>>
+    suspend fun getNowPlayingMovies(page: Int): Flow<NetworkResponse<PopularMovieResponse>>
 
     suspend fun getMovieDetail(movieId: Int): MovieDetailResponse
 
