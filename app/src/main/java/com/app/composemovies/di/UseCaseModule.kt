@@ -1,6 +1,5 @@
 package com.app.composemovies.di
 
-import com.app.composemovies.domain.mapper.DataToDomainMapper
 import com.app.composemovies.domain.repository.MovieRepository
 import com.app.composemovies.domain.usecase.GetMovieActorsUseCase
 import com.app.composemovies.domain.usecase.GetMovieActorsUseCaseImpl
@@ -21,29 +20,29 @@ class UseCaseModule {
 
     @Provides
     fun providePopularMovieUseCase(
-        repository: MovieRepository, mapper: DataToDomainMapper
+        repository: MovieRepository
     ): PopularMoviesUseCase {
-        return PopularMoviesUseCaseImpl(repository, mapper)
+        return PopularMoviesUseCaseImpl(repository)
     }
 
     @Provides
     fun provideNowPlayingMovieUseCase(
-        repository: MovieRepository, mapper: DataToDomainMapper
+        repository: MovieRepository
     ): NowPlayingMoviesUseCase {
-        return NowPlayingMoviesUseCaseImpl(repository, mapper)
+        return NowPlayingMoviesUseCaseImpl(repository)
     }
 
     @Provides
     fun provideMovieDetailUseCase(
-        repository: MovieRepository, mapper: DataToDomainMapper
+        repository: MovieRepository
     ): MovieDetailUseCase {
-        return MovieDetailUseCaseImpl(repository, mapper)
+        return MovieDetailUseCaseImpl(repository)
     }
 
     @Provides
     fun provideMovieActorsUseCase(
-        repository: MovieRepository, mapper: DataToDomainMapper
+        repository: MovieRepository
     ): GetMovieActorsUseCase {
-        return GetMovieActorsUseCaseImpl(repository, mapper)
+        return GetMovieActorsUseCaseImpl(repository)
     }
 }

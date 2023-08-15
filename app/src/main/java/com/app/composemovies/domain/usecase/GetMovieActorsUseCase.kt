@@ -1,6 +1,5 @@
 package com.app.composemovies.domain.usecase
 
-import com.app.composemovies.domain.mapper.DataToDomainMapper
 import com.app.composemovies.domain.models.Cast
 import com.app.composemovies.domain.repository.MovieRepository
 
@@ -9,12 +8,11 @@ interface GetMovieActorsUseCase {
 }
 
 class GetMovieActorsUseCaseImpl(
-    private val repository: MovieRepository,
-    private val mapper: DataToDomainMapper
+    private val repository: MovieRepository
 ) : GetMovieActorsUseCase {
 
     override suspend fun getMovieActors(movieId: Int): List<Cast> {
-        return repository.getActors(movieId).cast.map { mapper.map(it) }
+        return repository.getActors(movieId)
     }
 
 }

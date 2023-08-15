@@ -1,4 +1,4 @@
-package com.app.composemovies.domain.mapper
+package com.app.composemovies.data.mapper
 
 import com.app.composemovies.data.models.CastResult
 import com.app.composemovies.data.models.MovieDetailResponse

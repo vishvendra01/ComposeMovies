@@ -1,5 +1,6 @@
 package com.app.composemovies.di
 
+import com.app.composemovies.data.mapper.DataToDomainMapper
 import com.app.composemovies.data.remote.MovieApiService
 import com.app.composemovies.data.repository.MovieRepositoryImpl
 import com.app.composemovies.domain.repository.MovieRepository
@@ -13,7 +14,10 @@ import dagger.hilt.components.SingletonComponent
 class RepositoryModule {
 
     @Provides
-    fun providePopularMovieRepository(apiService: MovieApiService): MovieRepository {
-        return MovieRepositoryImpl(apiService)
+    fun providePopularMovieRepository(
+        apiService: MovieApiService,
+        dataToDomainMapper: DataToDomainMapper
+    ): MovieRepository {
+        return MovieRepositoryImpl(apiService, dataToDomainMapper)
     }
 }
