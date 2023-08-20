@@ -19,7 +19,9 @@ import com.app.composemovies.ui.moviedetail.view.MovieDetailScreen
 import com.app.composemovies.ui.moviedetail.viewmodel.MovieDetailViewModel
 import com.app.composemovies.ui.nowplaying.viewmodel.NowPlayingMovieViewModel
 import com.app.composemovies.ui.popular.viewmodel.PopularMovieViewModel
-import com.app.composemovies.ui.tabs.TabScreen
+import com.app.composemovies.ui.search.ui.SearchResultScreen
+import com.app.composemovies.ui.search.viewmodel.SearchViewModel
+import com.app.composemovies.ui.tabs.MainScreen
 import com.app.composemovies.ui.theme.ComposeMoviesTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,6 +48,7 @@ fun MoviesApp(
     nowPlayingMovieViewModel: NowPlayingMovieViewModel
 ) {
     val navController = rememberNavController()
+    val searchViewModel = hiltViewModel<SearchViewModel>()
     ComposeMoviesTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -53,9 +56,10 @@ fun MoviesApp(
         ) {
             NavHost(navController = navController, startDestination = "movies") {
                 composable("movies") {
-                    TabScreen(
+                    MainScreen(
                         popularMovieViewModel = popularMovieViewModel,
                         nowPlayingMovieViewModel = nowPlayingMovieViewModel,
+                        searchViewModel = searchViewModel,
                         navController = navController
                     )
                 }
@@ -66,6 +70,17 @@ fun MoviesApp(
                     val viewModel: MovieDetailViewModel = hiltViewModel<MovieDetailViewModel>()
                     val movieId = backStackEntry.arguments?.getInt("movieId")
                     MovieDetailScreen(movieId = movieId!!, viewModel)
+                }
+
+                composable("search_results/{genreId}/{genreName}",
+                    arguments = listOf(navArgument("genreId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                    SearchResultScreen(
+                        searchViewModel = searchViewModel,
+                        genreId = backStackEntry.arguments?.getInt("genreId")!!,
+                        genreName = backStackEntry.arguments?.getString("genreName")!!,
+                        navController = navController
+                    )
                 }
             }
         }

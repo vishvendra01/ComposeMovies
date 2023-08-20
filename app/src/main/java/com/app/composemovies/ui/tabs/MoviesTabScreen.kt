@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabScreen(
+fun MoviesTabScreen(
     popularMovieViewModel: PopularMovieViewModel,
     nowPlayingMovieViewModel: NowPlayingMovieViewModel,
     navController: NavController

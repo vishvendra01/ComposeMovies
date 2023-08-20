@@ -1,8 +1,12 @@
 package com.app.composemovies.di
 
 import com.app.composemovies.domain.repository.MovieRepository
+import com.app.composemovies.domain.usecase.GetGenresUseCase
+import com.app.composemovies.domain.usecase.GetGenresUseCaseImpl
 import com.app.composemovies.domain.usecase.GetMovieActorsUseCase
 import com.app.composemovies.domain.usecase.GetMovieActorsUseCaseImpl
+import com.app.composemovies.domain.usecase.GetMoviesByGenresUseCase
+import com.app.composemovies.domain.usecase.GetMoviesByGenresUseCaseImpl
 import com.app.composemovies.domain.usecase.MovieDetailUseCase
 import com.app.composemovies.domain.usecase.MovieDetailUseCaseImpl
 import com.app.composemovies.domain.usecase.NowPlayingMoviesUseCase
@@ -44,5 +48,19 @@ class UseCaseModule {
         repository: MovieRepository
     ): GetMovieActorsUseCase {
         return GetMovieActorsUseCaseImpl(repository)
+    }
+
+    @Provides
+    fun provideGetGenresUseCase(
+        repository: MovieRepository
+    ): GetGenresUseCase {
+        return GetGenresUseCaseImpl(repository)
+    }
+
+    @Provides
+    fun provideGetMoviesByGenresUseCase(
+        repository: MovieRepository
+    ): GetMoviesByGenresUseCase {
+        return GetMoviesByGenresUseCaseImpl(repository)
     }
 }

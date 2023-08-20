@@ -35,7 +35,7 @@ class DataToDomainMapper {
             overview = input.overview,
             voteAverage = input.vote_average,
             releaseDate = input.release_date,
-            genres = input.genres.map { Genre(it.id, it.name) },
+            genres = input.genreResults.map { Genre(it.id, it.name) },
             runtime = input.runtime,
             status = input.status,
             tagline = input.tagline,

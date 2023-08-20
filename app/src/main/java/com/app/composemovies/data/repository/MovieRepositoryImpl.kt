@@ -3,6 +3,7 @@ package com.app.composemovies.data.repository
 import com.app.composemovies.data.mapper.DataToDomainMapper
 import com.app.composemovies.data.remote.MovieApiService
 import com.app.composemovies.domain.models.Cast
+import com.app.composemovies.domain.models.Genre
 import com.app.composemovies.domain.models.Movie
 import com.app.composemovies.domain.models.MovieDetail
 import com.app.composemovies.domain.repository.MovieRepository
@@ -63,6 +64,18 @@ class MovieRepositoryImpl(
 
     override suspend fun getActors(movieId: Int): List<Cast> {
         return apiService.getActors(movieId).cast.map { dataToDomainMapper.map(it) }
+    }
+
+    override suspend fun getMoviesByGenre(genreId: Int, page: Int): List<Movie> {
+        return apiService.getMoviesByGenre(genreId, page).movieResults.map {
+            dataToDomainMapper.map(
+                it
+            )
+        }
+    }
+
+    override suspend fun getGenres(): List<Genre> {
+        return apiService.getGenres().genres.map { Genre(it.id, it.name) }
     }
 
 }

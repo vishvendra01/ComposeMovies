@@ -18,7 +18,3 @@ data class MovieDetail(
     val video: Boolean,
 )
 
-data class Genre(
-    val id: Int,
-    val name: String
-)

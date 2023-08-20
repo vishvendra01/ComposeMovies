@@ -1,11 +1,15 @@
 package com.app.composemovies.data.models
 
+import com.google.gson.annotations.SerializedName
+
 data class MovieDetailResponse(
+
     val adult: Boolean,
     val backdrop_path: String,
     val belongs_to_collection: Any,
     val budget: Int,
-    val genres: List<Genre>,
+    @SerializedName("genres")
+    val genreResults: List<GenreResult>,
     val homepage: String,
     val id: Int,
     val imdb_id: String,
@@ -26,11 +30,6 @@ data class MovieDetailResponse(
     val video: Boolean,
     val vote_average: Float,
     val vote_count: Int
-)
-
-data class Genre(
-    val id: Int,
-    val name: String
 )
 
 data class ProductionCompany(

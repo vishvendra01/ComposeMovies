@@ -1,6 +1,7 @@
 package com.app.composemovies.domain.repository
 
 import com.app.composemovies.domain.models.Cast
+import com.app.composemovies.domain.models.Genre
 import com.app.composemovies.domain.models.Movie
 import com.app.composemovies.domain.models.MovieDetail
 import com.app.composemovies.utils.NetworkResponse
@@ -15,4 +16,8 @@ interface MovieRepository {
     suspend fun getMovieDetail(movieId: Int): MovieDetail
 
     suspend fun getActors(movieId: Int): List<Cast>
+
+    suspend fun getMoviesByGenre(genreId: Int, page: Int): List<Movie>
+
+    suspend fun getGenres(): List<Genre>
 }
